@@ -1,0 +1,11 @@
+commit 9404ae99a8502998ef2f6fdf7f0f8009804eea4a
+Author: Anton <anton.rydzevsky@gmail.com>
+Date:   Mon Feb 15 18:46:33 2021 +0300
+
+    add task1 and status.txt
+
+commit ec75d837186af626c93e132dbeeadfc0bf467ab3
+Author: Anton <anton.rydzevsky@gmail.com>
+Date:   Mon Feb 15 18:37:45 2021 +0300
+
+    add .gitignore
