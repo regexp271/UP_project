@@ -12,7 +12,7 @@ import javax.servlet.RequestDispatcher;
 
 
 @WebServlet(urlPatterns = {"/page"})
-public class staticPageServlet extends HttpServlet {
+public class StaticPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 4L;
 	
 	@Override
