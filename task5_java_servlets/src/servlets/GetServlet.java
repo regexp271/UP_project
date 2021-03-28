@@ -1,6 +1,7 @@
-package statusServlet;
+package servlets;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -10,25 +11,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.WebServlet;
 
 
-@WebServlet(urlPatterns = {"/status"})
-public class StatusServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@WebServlet(urlPatterns = {"/get"})
+public class GetServlet extends HttpServlet {
+	private static final long serialVersionUID = 2L;
 	
 	@Override
 	protected void doGet(HttpServletRequest request,
 						 HttpServletResponse response) throws ServletException, IOException {
-	    
 		ServletOutputStream out = response.getOutputStream();
-	    
-		out.println("<!DOCTYPE html><html>");
-		out.println("<head><meta charset=\"UTF-8\"><title>Status Servlet</title></head>");
-	    
-		out.println("<body>");
-		out.println("<h1>Application Is Running</h1>");
-		out.println("</body>");
-		out.println("<html>");
+		
+		String name = request.getParameter("name");
+		if (Objects.isNull(name)) {
+			out.println("<h1>Wrong request</h1>");
+			out.println("<p>Try http://localhost:8080/get?name=TESTNAME</p>");
+		}
+		else {
+			out.println("<p>Name is " + name + "</p>");
+		}
 	}
-	 
+	
 	@Override
 	protected void doPost(HttpServletRequest request,
 						  HttpServletResponse response) throws ServletException, IOException {
