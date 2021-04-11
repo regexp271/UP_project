@@ -1,4 +1,82 @@
-window.addEventListener('load', function () {
+;(function () {
+    var objectStructure = {
+        id: {
+            type: "string",
+            optional: false            
+        },
+        description: {
+            type: "string",
+            maxLength: 200,
+            optional: false
+        },
+        createdAt: {
+            type: "Date",
+            optional: false
+        },
+        link: {
+            type: "string",
+            optional: false
+        },
+        vendor: {
+            type: "string",
+            optional: false
+        },
+        photoLink: {
+            type: "string",
+            optional: true
+        },
+        hashTags: {
+            type: "Array",
+            optional: false
+        },
+        discount: {
+            optional: false
+        },
+        validUntil: {
+            type: "Date",
+            optional: false
+        },
+        rating: {
+            type: "number",
+            minValue: 0,
+            maxValue: 5,
+            optional: true
+        },
+        reviews: {
+            type: "Array",
+            optional: true
+        }
+    };
+
+
+    function DateValidation (date) {
+        if (typeof date === "object") {
+            if (date.getTime !== undefined) {
+                var ms = date.getTime();
+
+                if (typeof ms === "number")
+                    if (ms >= 0)
+                        return new Date(ms);
+            }
+        }
+
+        return null;
+    }
+
+    var testDate = {
+        getTime: function() {
+            return 123456789*1000;
+        }
+    };
+    testDate = DateValidation(testDate);
+    if (testDate === null) {
+        console.log("invalid");
+    }
+    else {
+        console.log(testDate);
+    }
+
+
     adList = [
         {
             id: "1",
@@ -301,4 +379,7 @@ window.addEventListener('load', function () {
             reviews: []
         }
     ];
-});
+
+
+    
+}());
