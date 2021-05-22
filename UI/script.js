@@ -1,4 +1,52 @@
 ;(function () {
+    function NumberValidation (number, min, max) {
+        if (typeof number === "number") {
+            if (arguments.length >= 2) 
+                if (number < min) return false;
+
+            if (arguments.length >= 3) 
+                if (number > max) return false;
+
+            return true;
+        }
+        else return false;
+    }
+
+    console.log(NumberValidation("15"));
+    console.log(NumberValidation(15));
+    console.log(NumberValidation(15, 10));
+    console.log(NumberValidation(15, 20));
+    console.log(NumberValidation(15, 10, 20));
+
+
+    function DateValidation (date) {
+        if (typeof date === "object") {
+            if (date.getTime !== undefined) {
+                var ms = date.getTime();
+
+                if (typeof ms === "number")
+                    if (ms >= 0)
+                        return new Date(ms);
+            }
+        }
+
+        return null;
+    }
+
+    var testDate = {
+        getTime: function() {
+            return 123456789*1000;
+        }
+    };
+    testDate = DateValidation(testDate);
+    if (testDate === null) {
+        console.log("invalid");
+    }
+    else {
+        console.log(testDate);
+    }
+
+    
     var objectStructure = {
         id: {
             type: "string",
@@ -30,6 +78,7 @@
             optional: false
         },
         discount: {
+            type: "string",
             optional: false
         },
         validUntil: {
@@ -48,53 +97,63 @@
         }
     };
 
+    function validateAd (adItem) {
+        if (typeof adItem != "object") return false;
 
-    function DateValidation (date) {
-        if (typeof date === "object") {
-            if (date.getTime !== undefined) {
-                var ms = date.getTime();
+        for (var str in objectStructure) {
+            if (adItem[str] === undefined) {
+                if (!objectStructure[str].optional)
+                    return false;
+            }
+            else {
+                if (objectStructure[str].type === "string") {
+                    if (typeof adItem[str] != "string") return false;
 
-                if (typeof ms === "number")
-                    if (ms >= 0)
-                        return new Date(ms);
+                    if (objectStructure[str].maxLength != undefined)
+                        if (adItem[str].length > objectStructure[str].maxLength)
+                            return false;
+                }
+                else if (objectStructure[str].type === "Date") {
+                    var temp = DateValidation(adItem[str]);
+                    if (temp === null) return false;
+                    adItem[str] = temp;
+                }
+                else if (objectStructure[str].type === "Array") {
+                    if (typeof adItem[str] != "object") return false;
+                }
+                else if (objectStructure[str].type === "number") {
+                    if (!NumberValidation(adItem[str], 
+                                          objectStructure[str].minValue, 
+                                          objectStructure[str].maxValue)) return false;
+                }
             }
         }
 
-        return null;
+        return true;
     }
 
-    var testDate = {
-        getTime: function() {
-            return 123456789*1000;
-        }
+    var test = {
+        id: 20,
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        createdAt: new Date(2021, 0, 10, 12, 30, 0, 0),
+        link: "https://azure.microsoft.com/",
+        vendor: "Microsoft Azure",
+        photoLink: "pic.png",
+        hashTags: [
+            "hashtag1", "hashtag2"
+        ],
+        discount: "12%",
+        validUntil: new Date(2021, 5, 1, 10, 0, 0, 0),
+        rating: 4.8,
+        reviews: []
     };
-    testDate = DateValidation(testDate);
-    if (testDate === null) {
-        console.log("invalid");
-    }
-    else {
-        console.log(testDate);
-    }
-
-
-    function NumberValidation (number, min, max) {
-        if (typeof number === "number") {
-            if (arguments.length >= 2) 
-                if (number < min) return false;
-
-            if (arguments.length >= 3) 
-                if (number > max) return false;
-
-            return true;
-        }
-        else return false;
-    }
-
-    console.log(NumberValidation("15"));
-    console.log(NumberValidation(15));
-    console.log(NumberValidation(15, 10));
-    console.log(NumberValidation(15, 20));
-    console.log(NumberValidation(15, 10, 20));
+    console.log(validateAd(test));
+    test.id = "20";
+    console.log(validateAd(test));
+    test.createdAt = {};
+    console.log(validateAd(test));
+    test.createdAt = new Date(2021, 0, 10, 12, 30, 0, 0);
+    console.log(validateAd(test));
 
 
     adList = [
@@ -382,23 +441,24 @@
             validUntil: new Date(2021, 5, 1, 10, 0, 0, 0),
             rating: 4.8,
             reviews: []
-        },
-        {
-            id: "20",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            createdAt: new Date(2021, 0, 10, 12, 30, 0, 0),
-            link: "https://azure.microsoft.com/",
-            vendor: "Microsoft Azure",
-            photoLink: "pic.png",
-            hashTags: [
-                "hashtag1", "hashtag2"
-            ],
-            discount: "12%",
-            validUntil: new Date(2021, 5, 1, 10, 0, 0, 0),
-            rating: 4.8,
-            reviews: []
         }
     ];
+
+
+    function addAd (adItem) {
+        if (validateAd(adItem)) {
+            adList.push(adItem);
+            return true;
+        }
+        else return false;
+    }
+
+    console.log(adList.length);
+    test.vendor = 3;
+    console.log(addAd(test));
+    test.vendor = "Microsoft Azure";
+    console.log(addAd(test));
+    console.log(adList.length);
 
 
     function getAds (skip, top, filterConfig) {
@@ -452,4 +512,58 @@
             till: new Date(2021, 0, 4, 20)
         }
     }));
+
+
+    function getAd (id) {
+        for (var i = 0; i < adList.length; i++)
+            if (adList[i].id === id)
+                return adList[i];
+
+        return null;
+    }
+
+    console.log(getAd("5"));
+    console.log(getAd("15"));
+    console.log(getAd("25"));
+
+
+    function editAd (id, adItem) {
+        for (var i = 0; i < adList.length; i++) {
+            if (adList[i].id === id) {
+                var temp = {};
+                Object.assign(temp, adList[i]);
+                Object.assign(temp, adItem);
+
+                if (validateAd(temp)) {
+                    adList[i] = temp;
+                    return true;
+                }
+                else return false;
+            }
+        }
+
+        return false;
+    }
+
+    console.log(editAd("21", { id: "20" }));
+    console.log(editAd("20", { id: 200 }));
+    console.log(getAd("20"), getAd("200"));
+    console.log(editAd("20", { id: "200" }));
+    console.log(getAd("20"), getAd("200"));
+
+
+    function removeAd (id) {
+        for (var i = 0; i < adList.length; i++) {
+            if (adList[i].id === id) {
+                adList.splice(i, 1);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    console.log(removeAd("20"));
+    console.log(removeAd("200"));
+    console.log(adList.length);
 }());
