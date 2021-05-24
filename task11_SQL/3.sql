@@ -1,0 +1,1 @@
+SELECT * FROM [Ads] WHERE [CreatedAt] < '2021-01-03 23:59:59.999' AND [CreatedAt] > '2021-01-03 00:00:00.000'
