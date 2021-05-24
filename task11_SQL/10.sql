@@ -1,0 +1,1 @@
+SELECT * FROM [Ads] WHERE [Rating] > 3
