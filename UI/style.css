@@ -1,0 +1,148 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 500;
+}
+b {
+    font-weight: bold;
+}
+p {
+    font-size: 20px;
+}
+
+h1.profit_logo {
+    display: inline-block;
+    color: white;
+}
+p.blue_button {
+    display: inline-block;
+    border: solid black 3px;
+    border-radius: 15px;
+    padding: 8px;
+    background-color: #3500d3;
+    color: white;
+}
+p.blue_button:hover {
+    cursor: pointer;
+}
+
+
+div#header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 25px;
+    background-color: #240090;
+    color: white;
+}
+div#header div#user_info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+div#header h2#sign_in_out {
+    border: 3px solid white;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 0px 0px 0px 10px;
+}
+
+
+div#filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 25px;
+}
+div#filters div {
+    display: inline-block;
+}
+div#filters p {
+    display: inline-block;
+    font-size: 25px;
+}
+
+
+div#ads {
+    padding: 10px 25px;
+}
+div#ads div.ad {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: flex-start;
+
+    border-style: solid;
+    border-color: black;
+    border-width: 0px 0px 5px 0px;
+    margin: 0px 0px 20px 0px;
+}
+div#ads div.ad h2.ad_inner_title {
+    margin: 0px 0px 10px 0px;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+div#ads div.ad div.ad_main_info {
+    width: 20%;
+}
+#ads .ad .ad_main_info img.ad_picture {
+    width: 100%;
+}
+
+div#ads div.ad div.ad_description {
+    width: 40%;
+    margin: 0px 10px;
+}
+#ads .ad .ad_description p.description_text {
+    margin: 0px 0px 15px 0px;
+}
+
+div#ads div.ad div.ad_reviews {
+    width: 40%;
+}
+#ads .ad .ad_reviews div.review {
+    margin: 0px 0px 15px 0px;
+}
+#ads .ad .ad_reviews .review p.review_date {
+    color: grey;
+}
+#ads .ad .ad_reviews div.review_buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#ads .ad div.tools img {
+    width: 40px;
+    height: 40px;
+}
+
+
+div#footer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 115px;
+    background-color: #240090;
+}
+div#footer p#footer_info {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-size: 20px;
+    color: white;
+}
